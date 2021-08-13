@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:web_monitoring/controller/authentication.dart';
 import 'package:web_monitoring/controller/loginController.dart';
-import 'package:web_monitoring/main.dart';
 import 'package:web_monitoring/model/loginModel.dart';
 import 'package:web_monitoring/model/usersModel.dart';
-import 'package:web_monitoring/view/Signup.dart';
 
-class LoginActivity extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LoginActivityState createState() => _LoginActivityState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginActivityState extends State<LoginActivity>
-    implements LoginViewModel {
+class _LoginPageState extends State<LoginPage> implements LoginViewModel {
   late LoginController presenter;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -103,7 +100,7 @@ class _LoginActivityState extends State<LoginActivity>
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.blue)),
                           onPressed: () async {
-                            deviceID = await authentication.DeviceID();
+                            deviceID = await authentication.formatDeviceID();
                             doLogin(emailController.text.trim(),
                                 passwordController.text.trim(), deviceID);
                           },
@@ -117,10 +114,8 @@ class _LoginActivityState extends State<LoginActivity>
                         padding: EdgeInsets.only(top: 15),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return SignupActivity();
-                            }));
+                            Navigator.of(context)
+                                .pushReplacementNamed('/signupPage');
                           },
                           child: Text("Don't have an account yet?"),
                         ),
@@ -134,16 +129,13 @@ class _LoginActivityState extends State<LoginActivity>
 
   @override
   void finish() {
-    // if (user.role == 'admin') {
-    //   Navigator.of(context).push
-    // } else {
-    //   Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => MyHomePage(
-    //                 title: 'Bisa Yeee',
-    //               )));
-    // }
+    if (user.role == 'admin') {
+      Navigator.of(context).pushReplacementNamed('/adminPage');
+    } else if (user.role == 'operator') {
+      Navigator.of(context).pushReplacementNamed('/operatorPage');
+    } else {
+      Navigator.of(context).pushReplacementNamed('/clientPage');
+    }
   }
 
   @override

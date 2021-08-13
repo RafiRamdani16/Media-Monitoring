@@ -23,7 +23,7 @@ class SignupController implements SignupModel {
   void signup(
       String name, String email, String password, String deviceID) async {
     await api.signup(name, email, password, deviceID).then((it) {
-      if (it.status == "1") {
+      if (it.status == 200) {
         UserModel user = UserModel.fromJson(it.data);
         success(user.token, deviceID);
         view.finish();

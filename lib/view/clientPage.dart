@@ -37,7 +37,7 @@ class _ClientPageState extends State<ClientPage> {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginActivity()),
+                                      builder: (context) => LoginPage()),
                                   (r) => false);
                             },
                           ),

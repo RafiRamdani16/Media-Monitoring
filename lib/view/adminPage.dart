@@ -39,7 +39,7 @@ class _AdminPageState extends State<AdminPage> {
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginActivity()),
+                                        builder: (context) => LoginPage()),
                                     (r) => false);
                               },
                             ),

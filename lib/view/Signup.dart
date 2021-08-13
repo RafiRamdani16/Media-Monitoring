@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:web_monitoring/controller/SignupController.dart';
 import 'package:web_monitoring/controller/authentication.dart';
+
 import 'package:web_monitoring/model/signupModel.dart';
 import 'package:web_monitoring/view/Login.dart';
 
@@ -121,6 +122,7 @@ class _SignupActivityState extends State<SignupActivity>
                         ),
                       ),
                       TextField(
+                        obscureText: true,
                         decoration: InputDecoration(
                             border: UnderlineInputBorder(),
                             hintText: 'Enter your password'),
@@ -132,7 +134,7 @@ class _SignupActivityState extends State<SignupActivity>
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.blue)),
                           onPressed: () async {
-                            deviceID = await authentication.DeviceID();
+                            deviceID = await authentication.formatDeviceID();
                             _doSignup(
                                 nameController.text.trim(),
                                 emailController.text.trim(),
@@ -152,7 +154,7 @@ class _SignupActivityState extends State<SignupActivity>
 
   @override
   void finish() => Navigator.pushAndRemoveUntil(context,
-      MaterialPageRoute(builder: (context) => LoginActivity()), (r) => false);
+      MaterialPageRoute(builder: (context) => LoginPage()), (r) => false);
 
   @override
   void toast(String message) => Fluttertoast.showToast(msg: message);

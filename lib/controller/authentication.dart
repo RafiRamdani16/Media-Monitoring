@@ -5,13 +5,13 @@ import 'package:web_monitoring/services/apiService.dart';
 class Authentication {
   RestClient api = RestClient(Dio());
 
-  Future<String> Token() async {
+  Future<String> formatToken() async {
     String token = await getToken();
     token = "Bearer $token";
     return token;
   }
 
-  Future<String> DeviceID() async {
+  Future<String> formatDeviceID() async {
     String deviceID = await getDeviceID();
     deviceID = "$deviceID";
     return deviceID;
@@ -30,10 +30,10 @@ class Authentication {
   }
 
   Future<void> auth() async {
-    String token = await Token();
-    String deviceID = await DeviceID();
+    String token = await formatToken();
+    String deviceID = await formatDeviceID();
     await api.auth(token, deviceID).then((response) {
-      if (response.status == '1') {
+      if (response.status == 1) {
         return 1;
       } else {
         return 0;
